@@ -4,7 +4,6 @@
 
 int main()
 {
-
 	GameEngine::Application app;
 	app.start();
 }

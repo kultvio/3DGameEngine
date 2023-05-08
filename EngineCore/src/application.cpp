@@ -16,9 +16,7 @@ namespace GameEngine
 		GameEngine::Window& window = GameEngine::Window::getInstanse();
 		while (!glfwWindowShouldClose(window.getGLFWwindow()))
 		{
-			glfwPollEvents();
-			glfwSwapBuffers(window.getGLFWwindow());
-
+			window.onUpdate();
 		}
 		return 0;
 	}

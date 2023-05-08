@@ -1,6 +1,9 @@
 #pragma once
+#include<imgui/imgui.h>
 #include <glad/glad.h>
 #include<GLFW/glfw3.h>
+
+
 #include <string>
 #include <functional>
 #include "event.h"
@@ -28,10 +31,10 @@ namespace GameEngine
 			return instanse;
 		}
 
-		void init(const std::string& name, int width, int height);
+		int init(const std::string& name, int width, int height);
 		__forceinline GLFWwindow* getGLFWwindow() const { return window; }
 		void setfnCallback(const std::function<void(Event&)>& fn) { fnCallback = fn; }
-
+		void onUpdate();
 	public:
 		static void mouseMoveCallback(GLFWwindow* window, double x, double y);
 		static void mouseScrolledCallback(GLFWwindow* window, double x, double y);

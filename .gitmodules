@@ -1,3 +1,6 @@
 [submodule "EngineCore/depend/glfw"]
 	path = EngineCore/depend/glfw
 	url = https://github.com/glfw/glfw.git
+[submodule "EngineCore/depend/imgui"]
+	path = EngineCore/depend/imgui
+	url = https://github.com/ocornut/imgui.git
