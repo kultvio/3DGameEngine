@@ -1,6 +1,7 @@
 #include "window.h"
 #include "imgui/imgui.h"
 #include "imgui/backends/imgui_impl_opengl3.h"
+#include <imgui/backends/imgui_impl_glfw.h>
 #include "mouseEvent.h"
 #include "keyEvent.h"
 #include "windowEvent.h"
@@ -21,6 +22,7 @@ namespace GameEngine
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGui_ImplOpenGL3_Init();
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
 	}
 
 	int Window::init(const std::string& name, int width, int height)
@@ -61,6 +63,7 @@ namespace GameEngine
 	void Window::onUpdate()
 	{
 		glClearColor(1, 0, 0, 0);
+		glClearColor(m_background_color[0], m_background_color[1], m_background_color[2], m_background_color[3]);
 		glClear(GL_COLOR_BUFFER_BIT);
 		ImGuiIO& io = ImGui::GetIO();
 
@@ -68,10 +71,13 @@ namespace GameEngine
 		io.DisplaySize.y = height;
 
 		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
 		ImGui::ShowDemoWindow();
-
+		ImGui::Begin("Background Color Window");
+		ImGui::ColorEdit4("Background Color", m_background_color);
+		ImGui::End();
 		ImGui::Render();
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
