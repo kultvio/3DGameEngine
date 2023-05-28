@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.26)
 
 set(ENGINE_PROJECT_NAME EngineCore)
 
-add_library(${ENGINE_PROJECT_NAME} STATIC
+set(ENGINE_SRC
 	src/window.cpp
 	src/window.h
 	src/event.h
@@ -13,8 +13,17 @@ add_library(${ENGINE_PROJECT_NAME} STATIC
 	src/application.cpp
 	src/Rendering/ShaderProgram.cpp
 	src/Rendering/ShaderProgram.h
+	src/Rendering/VertexBuffer.cpp
+	src/Rendering/VertexBuffer.h
 )
 
+
+add_library(${ENGINE_PROJECT_NAME} STATIC
+	${ENGINE_SRC}
+)
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES
+	${ENGINE_SRC}
+)
 target_include_directories(${ENGINE_PROJECT_NAME} PUBLIC src)
 target_compile_features(${ENGINE_PROJECT_NAME} PUBLIC cxx_std_17)
 
