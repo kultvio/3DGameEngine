@@ -9,14 +9,14 @@
 #include "event.h"
 namespace GameEngine
 {
-	class Window final //от сюда нельзя будет наследоваться
+	class Window final 
 	{
 	private:
 		std::string name;
 		int width, height;
 		GLFWwindow* window = nullptr;
 		std::function<void(Event&)> fnCallback;
-		float m_background_color[4] = { 1.f, 0.f, 0.f, 0.f };
+		float m_background_color[4] = { 0.25f, 0.25f, 0.25f, 0.f };
 	public:
 		// удаляем copy конструкторы
 		Window(const Window&) = delete;

@@ -11,6 +11,8 @@ add_library(${ENGINE_PROJECT_NAME} STATIC
 	src/windowEvent.h
 	src/application.h
 	src/application.cpp
+	src/Rendering/ShaderProgram.cpp
+	src/Rendering/ShaderProgram.h
 )
 
 target_include_directories(${ENGINE_PROJECT_NAME} PUBLIC src)
