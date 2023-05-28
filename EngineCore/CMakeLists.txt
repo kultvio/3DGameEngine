@@ -17,6 +17,8 @@ set(ENGINE_SRC
 	src/Rendering/VertexBuffer.h
 	src/Rendering/VertexArray.cpp
 	src/Rendering/VertexArray.h
+	src/Rendering/IndexBuffer.cpp
+	src/Rendering/IndexBuffer.h
 )
 
 
