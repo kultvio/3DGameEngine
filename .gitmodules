@@ -4,3 +4,6 @@
 [submodule "EngineCore/depend/imgui"]
 	path = EngineCore/depend/imgui
 	url = https://github.com/ocornut/imgui.git
+[submodule "EngineCore/depend/glm"]
+	path = EngineCore/depend/glm
+	url = https://github.com/g-truc/glm.git

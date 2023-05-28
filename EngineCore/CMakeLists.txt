@@ -37,6 +37,10 @@ target_link_libraries(${ENGINE_PROJECT_NAME} PUBLIC glfw)
 add_subdirectory(depend/glad ${CMAKE_CURRENT_BINARY_DIR}/glad)
 target_link_libraries(${ENGINE_PROJECT_NAME} PUBLIC glad)
 
+
+add_subdirectory(depend/glm ${CMAKE_CURRENT_BINARY_DIR}/glm)
+target_link_libraries(${ENGINE_PROJECT_NAME} PRIVATE glm)
+
 set(IMGUI_INCLUDES
 	depend/imgui/imgui.h
 	depend/imgui/backends/imgui_impl_glfw.h

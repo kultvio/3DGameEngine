@@ -1,6 +1,7 @@
 #include "ShaderProgram.h"
 #include <glad/glad.h>
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 namespace GameEngine
 {
 	bool createShader(const char* source, const GLenum shader_type, GLuint& shader_id)
@@ -17,7 +18,10 @@ namespace GameEngine
 		}
 		return true;
 	}
-
+	void ShaderProgram::setMatrix4(const char* name, const glm::mat4& matrix) const
+	{
+		glUniformMatrix4fv(glGetUniformLocation(m_id, name), 1, GL_FALSE, glm::value_ptr(matrix));
+	}
 	ShaderProgram::ShaderProgram(const char* vertex_shader_src, const char* fragment_shader_src)
 	{
 		GLuint vertex_shader_id = 0;
