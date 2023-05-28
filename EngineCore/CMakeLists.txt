@@ -5,6 +5,8 @@ set(ENGINE_PROJECT_NAME EngineCore)
 set(ENGINE_SRC
 	src/window.cpp
 	src/window.h
+	src/camera.cpp
+	src/camera.h
 	src/event.h
 	src/keyEvent.h
 	src/mouseEvent.h

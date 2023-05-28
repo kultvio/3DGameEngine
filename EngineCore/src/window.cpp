@@ -1,15 +1,20 @@
+#include <iostream>
 #include "window.h"
+
 #include "imgui/imgui.h"
 #include "imgui/backends/imgui_impl_opengl3.h"
 #include <imgui/backends/imgui_impl_glfw.h>
+
 #include "mouseEvent.h"
 #include "keyEvent.h"
 #include "windowEvent.h"
+#include "Camera.h"
+
 #include "Rendering/ShaderProgram.h"
 #include "Rendering/VertexBuffer.h"
 #include "Rendering/VertexArray.h"
 #include "Rendering/IndexBuffer.h"
-#include <iostream>
+
 
 #include <glm/trigonometric.hpp>
 
@@ -29,10 +34,12 @@ namespace GameEngine
            layout(location = 0) in vec3 vertex_position;
            layout(location = 1) in vec3 vertex_color;
            uniform mat4 model_matrix;
+		   uniform mat4 view_projection_matrix;
            out vec3 color;
            void main() {
               color = vertex_color;
               gl_Position = model_matrix * vec4(vertex_position, 1.0);
+			  gl_Position = view_projection_matrix * model_matrix * vec4(vertex_position, 1.0);
            }
         )";
 	const char* fragment_shader =
@@ -52,6 +59,10 @@ namespace GameEngine
 	float rotate = 0.f;
 	float translate[3] = { 0.f, 0.f, 0.f };
 
+	float camera_position[3] = { 0.f, 0.f, 1.f };
+	float camera_rotation[3] = { 0.f, 0.f, 0.f };
+	bool perspective_camera = false;
+	Camera camera;
 	Window::Window(const std::string& name, int width, int height)
 	{
 		init(name, width, height);
@@ -152,7 +163,17 @@ namespace GameEngine
 		ImGui::SliderFloat("rotate", &rotate, 0.f, 360.f);
 		ImGui::SliderFloat3("translate", translate, -1.f, 1.f);
 
+		ImGui::SliderFloat3("camera position", camera_position, -10.f, 10.f);
+		ImGui::SliderFloat3("camera rotation", camera_rotation, 0, 360.f);
+		ImGui::Checkbox("Perspective camera", &perspective_camera);
+
 		p_shader_program->bind();
+
+		camera.set_position_rotation(glm::vec3(camera_position[0], camera_position[1], camera_position[2]),
+			glm::vec3(camera_rotation[0], camera_rotation[1], camera_rotation[2]));
+		camera.set_projection_mode(perspective_camera ? Camera::ProjectionMode::Perspective : Camera::ProjectionMode::Orthographic);
+		p_shader_program->setMatrix4("view_projection_matrix", camera.get_projection_matrix() * camera.get_view_matrix());
+
 		p_vao->bind();
 		glm::mat4 scale_matrix(scale[0], 0, 0, 0,
 			0, scale[1], 0, 0,
