@@ -20,7 +20,7 @@ namespace GameEngine {
 
     private:
         bool m_isCompiled = false;
-        unsigned int shader_program = 0;
+        unsigned int m_id = 0;
     };
 
 }

@@ -15,6 +15,8 @@ set(ENGINE_SRC
 	src/Rendering/ShaderProgram.h
 	src/Rendering/VertexBuffer.cpp
 	src/Rendering/VertexBuffer.h
+	src/Rendering/VertexArray.cpp
+	src/Rendering/VertexArray.h
 )
 
 

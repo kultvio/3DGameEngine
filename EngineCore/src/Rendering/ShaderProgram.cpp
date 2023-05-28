@@ -34,20 +34,20 @@ namespace GameEngine
 			return;
 		}
 
-		shader_program = glCreateProgram();
-		glAttachShader(shader_program, vertex_shader_id);
-		glAttachShader(shader_program, fragment_shader_id);
-		glLinkProgram(shader_program);
+		m_id = glCreateProgram();
+		glAttachShader(m_id, vertex_shader_id);
+		glAttachShader(m_id, fragment_shader_id);
+		glLinkProgram(m_id);
 
 		GLint success;
-		glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
+		glGetProgramiv(m_id, GL_LINK_STATUS, &success);
 		if (success == GL_FALSE)
 		{
 			GLchar info_log[1024];
-			glGetProgramInfoLog(shader_program, 1024, nullptr, info_log);
+			glGetProgramInfoLog(m_id, 1024, nullptr, info_log);
 			std::cout << info_log << "\n";
-			glDeleteProgram(shader_program);
-			shader_program = 0;
+			glDeleteProgram(m_id);
+			m_id = 0;
 			glDeleteShader(vertex_shader_id);
 			glDeleteShader(fragment_shader_id);
 			return;
@@ -56,20 +56,20 @@ namespace GameEngine
 		{
 			m_isCompiled = true;
 		}
-		glDetachShader(shader_program, vertex_shader_id);
-		glDetachShader(shader_program, fragment_shader_id);
+		glDetachShader(m_id, vertex_shader_id);
+		glDetachShader(m_id, fragment_shader_id);
 		glDeleteShader(vertex_shader_id);
 		glDeleteShader(fragment_shader_id);
 
 	}
 	ShaderProgram::~ShaderProgram()
 	{
-		glDeleteProgram(shader_program);
+		glDeleteProgram(m_id);
 	}
 
 	void ShaderProgram::bind() const
 	{
-		glUseProgram(shader_program);
+		glUseProgram(m_id);
 	}
 	void ShaderProgram::unbind()
 	{
@@ -77,21 +77,21 @@ namespace GameEngine
 	}
 	ShaderProgram& ShaderProgram::operator=(ShaderProgram&& shaderProgram)
 	{
-		glDeleteProgram(shader_program);
-		shader_program = shaderProgram.shader_program;
+		glDeleteProgram(m_id);
+		m_id = shaderProgram.m_id;
 		m_isCompiled = shaderProgram.m_isCompiled;
 
 		shaderProgram.m_isCompiled = false;
-		shaderProgram.shader_program = 0;
+		shaderProgram.m_id = 0;
 
 		return *this;
 	}
 	ShaderProgram::ShaderProgram(ShaderProgram&& shaderProgram)
 	{
-		shader_program = shaderProgram.shader_program;
+		m_id = shaderProgram.m_id;
 		m_isCompiled = shaderProgram.m_isCompiled;
 
 		shaderProgram.m_isCompiled = false;
-		shaderProgram.shader_program = 0;
+		shaderProgram.m_id = 0;
 	}
 }
